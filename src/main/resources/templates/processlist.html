@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>Social Media Crawler</title>
+<script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<style type="text/css">
+body{
+	font-family:sans-serif;
+	paddding:1px;
+}
+
+</style>
+
+<script th:inline="javascript">
+var app = angular.module("processList", ["ngTable"]); 
+app.controller("processListCtr", ['$scope', '$http', 'NgTableParams', function($scope, $http, NgTableParams) {
+	
+	$http.get("getprocesslist")
+	  .success(function(data, status) {
+	    $scope.data = data;
+
+	    $scope.tableParams = new NgTableParams({
+	    	sorting: {
+	    		status: 'desc',
+	    		crawlId: 'desc'
+	            
+	        }
+	    }, {
+	        total: $scope.data.length, // length of data
+	        dataset: $scope.data
+	      });
+	  });
+	
+}]);
+</script>
+</head>
+
+<body>
+
+<div ng-app="processList" ng-controller="processListCtr">
+
+<h1>Query Process List</h1>
+
+<form method="post" action="/runcrawlerapp">
+<fieldset>
+Keyword: <input type="text" name="keyword" />
+&nbsp;
+Search in: &nbsp;
+<select name="searchOption">
+	<option value="FB">Facebook</option>
+	<option value="TW">Twitter</option>
+	<option value="YT">Youtube</option>
+	<option value="IG">Instagram</option>
+	<option value="GP">Google +</option>
+	<option value="AL">All</option>
+</select>
+&nbsp;
+<input type="submit" value="Create Search process"/>
+</fieldset>
+</form>
+
+<br/>
+
+<table ng-table="tableParams" class="table" show-filter="true">
+
+<thead>
+	<th>Crawl Process Id</th>
+	<th>Search Term</th>
+	<th>Social Media API used</th>
+	<th>Elapsed Time</th>
+	<th>Status</th>
+	<th>Latest log</th>
+	<th></th>
+</thead>
+
+<tbody>
+ 
+ 	 <tr ng-repeat="item in $data">
+        <td title="'crawlId'" filter="{ crawlId 'text'}" sortable="'crawlId'">{{item.crawlId}}</td>
+		<td title="'searchTerm'" filter="{ searchTerm 'text'}" sortable="'searchTerm'">{{item.searchTerm}}</td>
+		<td title="'searchOption'" filter="{ searchOption 'text'}" sortable="'searchOption'"><img ng-src="images/{{item.searchAbbr}}.png"/>{{item.searchOption}}</td>
+		<td title="'startDate'" filter="{ startDate 'text'}" sortable="'startDate'">{{item.startDate}}</td>
+		<td title="'status'" filter="{ status 'text'}" sortable="'status'">{{item.status}}</td>
+		<td title="'latestLog'" filter="{ latestLog 'text'}" sortable="'latestLog'">-</td>
+		<td> <a target="_blank" href="/getdatafromfile?crawlid={{item.crawlId}}-{{item.searchTerm}}">View Data</a> </td>
+    </tr>
+
+</tbody>
+
+</table>
+
+</div><!-- end wrap controller -->
+<script>
+setTimeout(function(){
+	   window.location.reload(1);
+	}, 10000);
+</script>
+</body>
+</html>

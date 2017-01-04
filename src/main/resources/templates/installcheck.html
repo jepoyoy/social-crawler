@@ -1,0 +1,13 @@
+Installation Requirement Check
+<br/>
+1. Current directory - <span th:text="${userDir}"></span><br/>
+2. Create Crawl Data folder - <span th:text="${folderStatus}"></span><br/>
+
+
+<br/><br/><br/>
+
+Instatallation  
+<span th:switch="${installStatus}"> 
+<span th:case="true">successful! You may now use Crawler 2.0</span>
+<span th:case="false">failed! Check for errors</span>
+</span><br/>

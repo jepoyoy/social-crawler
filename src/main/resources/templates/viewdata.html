@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+<body>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+var crawlid = [[${crawlid}]]
+
+/*]]>*/
+var app = angular.module("viewData", ["ngTable"]); 
+app.controller("viewDataCtr", ['$scope', '$http', 'NgTableParams', function($scope, $http, NgTableParams) {
+	
+	$http.get("http://localhost:8090/getdatafromfile?crawlid=" + crawlid)
+	  .success(function(data, status) {
+	    $scope.data = data;
+
+	    $scope.tableParams = new NgTableParams({
+	        page: 1,            // show first page
+	        count: 10,          // count per page
+	    }, {
+	        total: $scope.data.length, // length of data
+	        dataset: $scope.data
+	      });
+	  });
+	
+}]);
+</script>
+
+<div ng-app="viewData" ng-controller="viewDataCtr">
+
+<table ng-table="tableParams" class="table" show-filter="true">
+    <tr ng-repeat="item in $data">
+        <td title="'Name'" filter="{ Name: 'text'}" sortable="'Name'">
+            {{item.Name}}</td>
+        <td title="'City'" filter="{ City: 'text'}" sortable="'City'">
+            {{item.City}}</td>
+        <td title="'Country'" filter="{ Country: 'text'}" sortable="'Country'">
+            {{item.Country}}</td>
+    </tr>
+</table>
+
+</div>
+
+</body>
+</html>
