@@ -5,9 +5,10 @@
   src="https://code.jquery.com/jquery-1.12.4.min.js"
   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
   crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
-<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/ng-table/bundles/ng-table.min.css">
+<script src="https://unpkg.com/ng-table/bundles/ng-table.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-resource.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <!-- Optional theme -->
@@ -23,34 +24,117 @@ body{
 </style>
 
 <script th:inline="javascript">
-var app = angular.module("processList", ["ngTable"]); 
-app.controller("processListCtr", ['$scope', '$http', 'NgTableParams', function($scope, $http, NgTableParams) {
-	
-	$http.get("getprocesslist")
-	  .success(function(data, status) {
-	    $scope.data = data;
+var app = angular.module("processList", ["ngTable", "ngResource"]);
+(function() {
 
-	    $scope.tableParams = new NgTableParams({
-	    	sorting: {
+  app.controller("processListCtr", processListCtr);
+  processListCtr.$inject = ["NgTableParams", "$resource", "$http", "$filter"];
+  
+  app.factory('getTailLog', function($http) {
+    return function(crawlid){
+        return $http({
+            method: 'GET',
+            url: 'http://www.domain.it/page.php',
+            params: {crawlid:crawlid}
+         });
+    }
+}) 
+
+  function processListCtr(NgTableParams, $resource, $http, $filter) {
+    // tip: to debug, open chrome dev tools and uncomment the following line 
+    //debugger;
+  
+	var root = this;
+    
+	root.tableParams = new NgTableParams({
+		sorting: {
 	    		status: 'desc',
 	    		crawlId: 'desc'
 	            
 	        }
-	    }, {
-	        total: $scope.data.length, // length of data
-	        dataset: $scope.data
-	      });
-	  });
+		
+	}, {
+      getData: function(params) {
+        // ajax request to api
+    	  return $http.get("/getprocesslist")
+		  .then(function(response) {
+		    var data = response.data;
+		    return params.sorting() ?
+                    $filter('orderBy')(data, params.orderBy()) : data;
+                 
+		  });
+      }
+    });
+
+    setInterval(function(){
+	  root.tableParams.reload();
+	}, 5000);
+
+  }
+  
+  app.directive('tkrLatestLog', ['$http', function($http) {
+	  return {
+	  	scope: {
+	      crawlid: '@',
+	      crawlquery: '@'
+	    },
+	    controller:function($scope){
+	        console.info("enter directive controller");
+	        $scope.text = "";
+	         console.log("/gettaillog?crawlid=" + $scope.crawlid + "-" + $scope.crawlquery)
+	          
+	        $http.get("/gettaillog?crawlid=" + $scope.crawlid + "-" + $scope.crawlquery).success(function(data){
+	           console.log("got data" + data.value);
+	           $scope.text = data.value;
+	        });
+	    },
+	    template: "<span style='font-size:0.7em'>{{text}}</span>"
+	  };
+	}]);
 	
-}]);
+	app.directive('tkrErrorLog', ['$http', function($http) {
+	  return {
+	  	scope: {
+	      crawlid: '@',
+	      crawlquery: '@'
+	    },
+	    controller:function($scope){
+	        console.info("enter directive controller");
+	        $scope.error = "";
+	         console.log("/geterrorlog?crawlid=" + $scope.crawlid + "-" + $scope.crawlquery)
+	          
+	        $http.get("/geterrorlog?crawlid=" + $scope.crawlid + "-" + $scope.crawlquery).success(function(data){
+	           console.log("got data" + data.value);
+	           $scope.error = data.value;
+	        });
+	    },
+	    template:"<a style='font-size:0.8em; color:red' ng-if='error' href='javascript:void(0)'>View error</a>",
+	    link: function(scope, elem, attrs) {
+	    	elem.bind('click', function() {
+	            alert(scope.error);
+	        });
+	    }
+	  };
+	}]);
+})();
 </script>
 </head>
 
 <body>
 
-<div ng-app="processList" ng-controller="processListCtr">
+<div ng-app="processList" ng-controller="processListCtr as procList">
 
 <h1>Query Process List</h1>
+
+
+<div id="process-alert" th:if="${message}" class="alert alert-success alert-dismissable">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <span th:text="${message}"></span>
+  <script style="text/javascript">
+  	$("#process-alert").delay(8000).fadeOut(1000);
+  </script>
+</div>
+
 
 <form method="post" action="/runcrawlerapp">
 <fieldset>
@@ -61,7 +145,6 @@ Search in: &nbsp;
 	<option value="FB">Facebook</option>
 	<option value="TW">Twitter</option>
 	<option value="YT">Youtube</option>
-	<option value="IG">Instagram</option>
 	<option value="GP">Google +</option>
 	<option value="AL">All</option>
 </select>
@@ -72,7 +155,7 @@ Search in: &nbsp;
 
 <br/>
 
-<table ng-table="tableParams" class="table" show-filter="true">
+<table ng-table="procList.tableParams" class="table table-bordered table-striped table-condensed" show-filter="true">
 
 <thead>
 	<th>Crawl Process Id</th>
@@ -91,8 +174,14 @@ Search in: &nbsp;
 		<td title="'searchTerm'" filter="{ searchTerm 'text'}" sortable="'searchTerm'">{{item.searchTerm}}</td>
 		<td title="'searchOption'" filter="{ searchOption 'text'}" sortable="'searchOption'"><img ng-src="images/{{item.searchAbbr}}.png"/>{{item.searchOption}}</td>
 		<td title="'startDate'" filter="{ startDate 'text'}" sortable="'startDate'">{{item.startDate}}</td>
-		<td title="'status'" filter="{ status 'text'}" sortable="'status'">{{item.status}}</td>
-		<td title="'latestLog'" filter="{ latestLog 'text'}" sortable="'latestLog'">-</td>
+		<td title="'status'" filter="{ status 'text'}" sortable="'status'">{{item.status}}
+			<tkr-error-log crawlid="{{item.crawlId}}" crawlquery="{{item.searchTerm}}"></tkr-error-log>
+		</td>
+		<td title="'latestLog'">
+			<span ng-hide="item.status=='Done'">
+				<tkr-latest-log crawlid="{{item.crawlId}}" crawlquery="{{item.searchTerm}}"></tkr-latest-log>
+			</span>
+		</td>
 		<td> <a target="_blank" href="/getdatafromfile?crawlid={{item.crawlId}}-{{item.searchTerm}}">View Data</a> </td>
     </tr>
 
@@ -102,9 +191,7 @@ Search in: &nbsp;
 
 </div><!-- end wrap controller -->
 <script>
-setTimeout(function(){
-	   window.location.reload(1);
-	}, 10000);
+
 </script>
 </body>
 </html>

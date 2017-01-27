@@ -1,7 +1,8 @@
-/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/demo/src/main/java/com/thakralone/util/DateUtil.java
-/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/demo/src/main/java/com/thakralone/pojo/CrawlerProcessItem.java
-/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/demo/src/main/java/com/example/AppRestController.java
-/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/demo/src/main/java/com/thakralone/util/FileUtil.java
-/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/demo/src/main/java/com/example/AppController.java
-/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/demo/src/main/java/com/thakralone/pojo/ApiEnum.java
-/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/demo/src/main/java/com/example/DemoApplication.java
+/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/thacrawler/src/main/java/com/thakralone/pojo/CrawlerProcessItem.java
+/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/thacrawler/src/main/java/com/thakralone/util/KeyValue.java
+/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/thacrawler/src/main/java/com/example/AppController.java
+/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/thacrawler/src/main/java/com/thakralone/util/DateUtil.java
+/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/thacrawler/src/main/java/com/example/AppRestController.java
+/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/thacrawler/src/main/java/com/thakralone/util/FileUtil.java
+/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/thacrawler/src/main/java/com/example/ThacrawlerApp.java
+/Users/jeffreybarron/Documents/workspace-sts-3.8.2.RELEASE/thacrawler/src/main/java/com/thakralone/pojo/ApiEnum.java

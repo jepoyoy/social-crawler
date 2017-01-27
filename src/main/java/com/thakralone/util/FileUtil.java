@@ -1,7 +1,10 @@
 package com.thakralone.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,24 @@ public class FileUtil {
 	    }
 	    
 	    return processFolders;
+	}
+	
+	public static String grep(Reader inReader, String searchFor) throws IOException {
+	    BufferedReader reader = null;
+	    try {
+	        reader = new BufferedReader(inReader);
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            if (line.contains(searchFor)) {
+	                return line;
+	            }
+	        }
+	    } finally {
+	        if (reader != null) {
+	            reader.close();
+	        }
+	    }
+		return "";
 	}
 	
 	public static String getLastLineFast(final File file) {
