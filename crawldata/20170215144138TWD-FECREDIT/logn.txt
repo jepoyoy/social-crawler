@@ -1,0 +1,10 @@
+INFO - Searching twitter page 1
+INFO - Searching twitter page 2
+INFO - Searching twitter page 3
+INFO - Searching twitter page 4
+INFO - Searching twitter page 5
+INFO - Now appending Twitter ID data (Place, Language, Location) to existing Twitter search results.
+INFO - [20170215144141] Searching Twitter ID 831564207883563008
+INFO - Crawl done. Converting results to Java hashmap
+INFO - Now converting to JSON string
+INFO - Processing done. Updated folder name

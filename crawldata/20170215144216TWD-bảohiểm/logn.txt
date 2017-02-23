@@ -1,0 +1,22 @@
+INFO - Searching twitter page 1
+INFO - Searching twitter page 2
+INFO - Searching twitter page 3
+INFO - Searching twitter page 4
+INFO - Searching twitter page 5
+INFO - Now appending Twitter ID data (Place, Language, Location) to existing Twitter search results.
+INFO - [20170215144219] Searching Twitter ID 831058984517849089
+INFO - [20170215144219] Searching Twitter ID 831058587736633344
+INFO - [20170215144219] Searching Twitter ID 831058500461563908
+INFO - [20170215144219] Searching Twitter ID 831058437869940737
+INFO - [20170215144219] Searching Twitter ID 831058379829190656
+INFO - [20170215144219] Searching Twitter ID 831057971526242305
+INFO - [20170215144219] Searching Twitter ID 831057925829337089
+INFO - [20170215144219] Searching Twitter ID 831057811517763585
+INFO - [20170215144219] Searching Twitter ID 831057745679835138
+INFO - [20170215144219] Searching Twitter ID 831057685353148417
+INFO - [20170215144219] Searching Twitter ID 831057613374705664
+INFO - [20170215144219] Searching Twitter ID 831057574275395585
+INFO - [20170215144219] Searching Twitter ID 831057478439759872
+INFO - Crawl done. Converting results to Java hashmap
+INFO - Now converting to JSON string
+INFO - Processing done. Updated folder name

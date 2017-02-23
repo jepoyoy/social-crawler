@@ -1,0 +1,5 @@
+ERROR - Encountered exception : 429:Returned in API v1.1 when a request cannot be served due to the application's rate limit having been exhausted for the resource. See Rate Limiting in API v1.1.(https://dev.twitter.com/docs/rate-limiting/1.1)message - Rate limit exceededcode - 88
+INFO - Now appending Twitter ID data (Place, Language, Location) to existing Twitter search results.
+INFO - Crawl done. Converting results to Java hashmap
+INFO - Now converting to JSON string
+INFO - Processing done. Updated folder name

@@ -1,0 +1,1 @@
+{"831564207883563008":{"tweetId":831564207883563008,"creator":"vaytinchapnhanh","favorites":0,"dateCreated":{"value":1487095331000,"dateOnly":false,"tzShift":480},"text":"Cho Vay Tiêu Dùng Tín Chấp Nhanh Giải Ngân Trong Ngày https://t.co/a7OrfQ4z9F\n#vaytinchapnhanh #vpbank #fecredit #miraeasset #mbshinsei","type":"twitter","userLocation":"Vietnam","language":"vi","likes":"0"}}

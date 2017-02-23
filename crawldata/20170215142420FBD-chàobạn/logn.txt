@@ -1,0 +1,5 @@
+INFO - [20170215142421]Searching Facebook post using 3rd party app - this will take around 5 mins
+INFO - [20170215142421]Adding JSON results to arraylist
+INFO - Crawl done. Converting results to Java hashmap
+INFO - Now converting to JSON string
+INFO - Processing done. Updated folder name

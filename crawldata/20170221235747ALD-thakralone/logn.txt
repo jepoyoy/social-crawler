@@ -1,0 +1,26 @@
+INFO - [20170221235747]Searching Facebook post using 3rd party app - this will take around 5 mins
+INFO - [20170221235747]Adding JSON results to arraylist
+INFO - [20170221235819] Searching Facebook post 619579548209573
+INFO - [20170221235819] Searching Facebook post 619579014876293
+INFO - [20170221235819] Searching Facebook post 619578964876298
+INFO - [20170221235819] Searching Facebook post 619578618209666
+INFO - [20170221235819] Searching Facebook post 619578221543039
+INFO - [20170221235819] Searching Facebook post 619577911543070
+INFO - [20170221235819] Searching Facebook post 619577861543075
+INFO - [20170221235819] Searching Facebook post 619577551543106
+INFO - [20170221235819] Searching Facebook post 619576534876541
+INFO - [20170221235820] Searching Facebook post 1063142033742215
+INFO - [20170221235820] Searching Facebook post 1035090816547337
+INFO - [20170221235820] Searching Facebook post 752221154865874
+INFO - [20170221235820] Searching Facebook post 897253146966517
+INFO - Searching twitter page 1
+INFO - Searching twitter page 2
+INFO - Searching twitter page 3
+INFO - Searching twitter page 4
+INFO - Searching twitter page 5
+INFO - Now appending Twitter ID data (Place, Language, Location) to existing Twitter search results.
+INFO - [20170221235824] Searching Youtube Page 1
+INFO - [20170221235824] Searching Youtube Page 2
+INFO - Crawl done. Converting results to Java hashmap
+INFO - Now converting to JSON string
+INFO - Processing done. Updated folder name
